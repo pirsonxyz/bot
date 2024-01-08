@@ -1,5 +1,5 @@
-const TOKEN: string = "MTE5MzczNTk4NTE2NzYwNTgzMQ.GlKRPK.kGJNtuHdSg4_r5X9WDYrPNzpWQe6rg49sVI_P4";
-const CLIENT_ID: string = "1193735985167605831"
+const TOKEN: string = "YOUR_TOKEN;
+const CLIENT_ID: string = "YOUR CLIEN ID"
 if (!TOKEN || !CLIENT_ID) {
   throw new Error("MISSING TOKEN AND CLIENT ID");
 }
