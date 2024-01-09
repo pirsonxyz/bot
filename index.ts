@@ -48,6 +48,9 @@ async function main() {
     
             interaction.editReply(`Ping: ${ping}ms`)
         }
+        if (interaction.commandName === 'version') {
+          await interaction.reply(`Chad 3.0 esta en v0.0.1(desarollo)`)
+        }
         
     });
     
@@ -88,8 +91,12 @@ const commands = [
   },
   {
     name: 'ping',
-    description: 'Responde con la latencia del bot'
+    description: 'Responde con la latencia del bot',
   },
+  {
+    name: 'version',
+    description: 'Version del Bot',
+  }
 ];
 
 const rest = new REST({ version: '10' }).setToken(config.TOKEN);
