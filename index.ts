@@ -2,6 +2,7 @@ import { REST, Routes, ApplicationCommandOptionType, ActivityType, AttachmentBui
 import { Client, GatewayIntentBits } from 'discord.js';
 import { config } from "./config"
 import { fetchUTCMinus4Time } from './commands/time';
+import { coinFlip } from './commands/moneda'
 
 const canvacord = require('canvacord');
 const mongoose = require('mongoose');
@@ -23,34 +24,42 @@ async function main() {
     client.on('interactionCreate', async interaction => {
       if (!interaction.isChatInputCommand()) return;
     
-      if (interaction.commandName === 'bot') {
-        await interaction.reply('Soy un bot creado por Pirson!');
-      }
-       if(interaction.commandName === 'tiempo') {
-          await interaction.deferReply({ ephemeral: false }); // Defer the reply
-    
+      switch (interaction.commandName) {
+        case 'bot':
+          await interaction.reply('Soy un bot creado por Pirson!');
+          break;
+      
+        case 'tiempo':
+          await interaction.deferReply({ ephemeral: false });
           const utcMinus4Time = await fetchUTCMinus4Time();
           await interaction.editReply(`Tiempo Actual: ${utcMinus4Time}`);
-        } 
-         if (interaction.commandName === 'suma' ) {
-            const num1: any = interaction.options.get('first-number')?.value;
-            const num2: any = interaction.options.get('second-number')?.value;
-
-            await interaction.reply(`La suma es igual a ${num1 + num2}`)
-        }
-        if (interaction.commandName === 'ping') {
-          
-            await interaction.deferReply();
-    
-            const reply = await interaction.fetchReply();
-    
-            const ping = reply.createdTimestamp - interaction.createdTimestamp;
-    
-            interaction.editReply(`Ping: ${ping}ms`)
-        }
-        if (interaction.commandName === 'version') {
-          await interaction.reply(`Chad 3.0 esta en v0.0.1(desarollo)`)
-        }
+          break;
+      
+        case 'suma':
+          const num1 = interaction.options.get('first-number')?.value;
+          const num2 = interaction.options.get('second-number')?.value;
+          await interaction.reply(`La suma es igual a ${num1 + num2}`);
+          break;
+      
+        case 'ping':
+          await interaction.deferReply();
+          const reply = await interaction.fetchReply();
+          const ping = reply.createdTimestamp - interaction.createdTimestamp;
+          interaction.editReply(`Ping: ${ping}ms`);
+          break;
+      
+        case 'version':
+          await interaction.reply(`Chad 3.0 esta en v0.0.1(desarollo)`);
+          break;
+      
+        case 'moneda':
+          const flip = coinFlip();
+          await interaction.reply(`🪙${flip}`);
+          break;
+      
+        default:
+          break;
+      }
         
     });
     
@@ -96,7 +105,11 @@ const commands = [
   {
     name: 'version',
     description: 'Version del Bot',
-  }
+  },
+  {
+    name:'moneda',
+    description: 'Tira una moneda',
+  },
 ];
 
 const rest = new REST({ version: '10' }).setToken(config.TOKEN);
