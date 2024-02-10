@@ -3,9 +3,6 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { config } from "./config"
 import { fetchUTCMinus4Time } from './commands/time';
 import { coinFlip } from './commands/moneda'
-import { obtenerEvangelioDiario } from './commands/evangelio';
-import axios from 'axios';
-import cheerio from 'cheerio';
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 async function main() {
@@ -15,7 +12,7 @@ async function main() {
 
 
       client.user?.setActivity({
-          name: 'Chad 3.0',
+          name: '/evangelio',
           type: ActivityType.Playing,
 
       });
