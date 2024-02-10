@@ -3,9 +3,9 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { config } from "./config"
 import { fetchUTCMinus4Time } from './commands/time';
 import { coinFlip } from './commands/moneda'
-
-const canvacord = require('canvacord');
-const mongoose = require('mongoose');
+import { obtenerEvangelioDiario } from './commands/evangelio';
+import axios from 'axios';
+import cheerio from 'cheerio';
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 async function main() {
@@ -34,13 +34,6 @@ async function main() {
           const utcMinus4Time = await fetchUTCMinus4Time();
           await interaction.editReply(`Tiempo Actual: ${utcMinus4Time}`);
           break;
-      
-        case 'suma':
-          const num1 = interaction.options.get('first-number')?.value;
-          const num2 = interaction.options.get('second-number')?.value;
-          await interaction.reply(`La suma es igual a ${num1 + num2}`);
-          break;
-      
         case 'ping':
           await interaction.deferReply();
           const reply = await interaction.fetchReply();
@@ -56,7 +49,13 @@ async function main() {
           const flip = coinFlip();
           await interaction.reply(`🪙${flip}`);
           break;
-      
+        case 'evangelio':
+          interface Lectura {
+            [fecha: string]: string; // La clave es la fecha, el valor es el texto
+        }
+        const lecturas: { lecturas: Lectura[] } = require('./lecturas.json');
+          await interaction.reply(`Evangelio: ${lecturas.lecturas[0]["10_de_febrero"]}`);
+          break;
         default:
           break;
       }
@@ -81,22 +80,8 @@ const commands = [
     description: 'Te dice el tiempo',
   },
   {
-    name: 'suma',
-    description: 'suma dos numeros',
-    options: [
-      {
-        name: 'first-number',
-        description: 'primer numero',
-        type: ApplicationCommandOptionType.Number,
-        required: true,
-      },
-      {
-        name: 'second-number',
-        description: 'segundo numero',
-        type: ApplicationCommandOptionType.Number,
-        required: true,
-      },
-    ]
+    name: 'evangelio',
+    description: 'evangelio del dia!'
   },
   {
     name: 'ping',
