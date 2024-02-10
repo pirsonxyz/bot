@@ -3,10 +3,10 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { config } from "./config"
 import { fetchUTCMinus4Time } from './commands/time';
 import { coinFlip } from './commands/moneda'
+
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 async function main() {
-  
   client.on('ready', () => {
       console.log(`✅Logged in as ${client.user.tag}!🤖`);
 
@@ -39,7 +39,7 @@ async function main() {
           break;
       
         case 'version':
-          await interaction.reply(`Chad 3.0 esta en v0.0.1(desarollo)`);
+          await interaction.reply(`Evangelio en v0.0.1(desarollo)`);
           break;
       
         case 'moneda':
@@ -51,7 +51,7 @@ async function main() {
             [fecha: string]: string; // La clave es la fecha, el valor es el texto
         }
         const lecturas: { lecturas: Lectura[] } = require('./lecturas.json');
-          await interaction.reply(`Evangelio: ${lecturas.lecturas[0]["10_de_febrero"]}`);
+          await interaction.reply(`Evangelio del 10 de febrero: ${lecturas.lecturas[0]["10_de_febrero"]}`);
           break;
         default:
           break;
