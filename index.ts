@@ -1,4 +1,4 @@
-import { REST, Routes, ApplicationCommandOptionType, ActivityType, AttachmentBuilder} from 'discord.js';
+import { REST, Routes, ApplicationCommandOptionType, ActivityType, AttachmentBuilder, EmbedBuilder} from 'discord.js';
 import { Client, GatewayIntentBits } from 'discord.js';
 import { config } from "./config"
 import { fetchUTCMinus4Time } from './commands/time';
@@ -53,6 +53,9 @@ async function main() {
         const lecturas: { lecturas: Lectura[] } = require('./lecturas.json');
           await interaction.reply(`Evangelio del 10 de febrero: ${lecturas.lecturas[0]["10_de_febrero"]}`);
           break;
+        case 'lider':
+          await interaction.reply(`**VIDEOS MAS VACANOS DE EL LIDER**\n[LIDER EN CONTRA DE JONATHAN PINA](https://www.youtube.com/watch?v=TOnSJLAIu1A&t=1477s)\n[LIDER EN ALOFOKE](https://www.youtube.com/watch?v=VelUopf26Og&t=346s)\n[LAS FUNCIONES DE LOS DIACONOS](https://www.youtube.com/watch?v=Hl7Hczrvr9Y)\n[LA IGLESIA PERDIO](https://www.youtube.com/watch?v=mnb9e4n6O8o)\n[EL LIDER EN CONTRA DE WENDI Y ESTEFANIA](https://www.youtube.com/watch?v=W7v6zigzI8M)`)
+          break;
         default:
           break;
       }
@@ -92,6 +95,10 @@ const commands = [
     name:'moneda',
     description: 'Tira una moneda',
   },
+  {
+    name:'lider',
+    description:'videos mas vacanos del lider'
+  },
 ];
 
 const rest = new REST({ version: '10' }).setToken(config.TOKEN);
@@ -105,4 +112,3 @@ try {
 } catch (error) {
   console.error(error);
 }
-

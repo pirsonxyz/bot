@@ -22,4 +22,3 @@ async function getEvangelioText() {
 
 // Llamar a la función para obtener el texto del Evangelio
 getEvangelioText();
-
