@@ -1,5 +1,5 @@
 const TOKEN: string = '';
-const CLIENT_ID: string = ''
+const CLIENT_ID: string = '';
 if (!TOKEN || !CLIENT_ID) {
   throw new Error('MISSING TOKEN AND CLIENT ID');
 }
