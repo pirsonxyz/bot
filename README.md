@@ -5,3 +5,7 @@ Tienes que cambiar TOKEN Y CLIENT_ID en ```config.ts```
 ```bun install```
 
 ```bun run start```
+
+O
+
+```chmod +x setup.sh && ./setup.sh```
