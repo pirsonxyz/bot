@@ -11,6 +11,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 async function main() {
   client.on("ready", () => {
     console.log(`✅Logged in as ${client.user.tag}!🤖`);
+    console.log(`🛠️Currently in ${client.guilds.cache.size} servers!`)
 
     client.user?.setActivity({
       name: "/evangelio",
