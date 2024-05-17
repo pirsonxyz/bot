@@ -8,6 +8,25 @@ import { getRandomSize } from "./commands/size";
 import { logUserActivity } from "./utils/log_user";
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
+async function fetchEvangelio() {
+  try {
+    const response = await fetch("http://127.0.0.1:6969/evangelio");
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    // Parse plain text response
+    const data = await response.text();
+
+    // Use the response data
+    return data;
+  } catch (error) {
+    console.error("There was a problem with the fetch operation:", error);
+  }
+}
+
 async function main() {
   client.on("ready", () => {
     console.log(`✅Logged in as ${client.user.tag}!🤖`);
@@ -52,13 +71,21 @@ async function main() {
         await interaction.reply(`🪙${flip}`);
         break;
       case "evangelio":
-        interface Lectura {
-          [fecha: string]: string; // La clave es la fecha, el valor es el texto
+        try {
+          const response = await fetch('http://127.0.0.1:6969/evangelio');
+
+          if (!response.ok) {
+            throw new Error(`Failed to get Evangelio: ${response.statusText}`);
+          }
+
+          const evangelio = await response.text();
+
+          await interaction.reply(`**Evangelio de Hoy**: ${evangelio}`);
+        } catch (error) {
+          console.error(error);
+          await interaction.reply("There was an error shortening the URL.");
         }
-        const lecturas: { lecturas: Lectura[] } = require("./lecturas.json");
-        await interaction.reply(
-          `**Evangelio del 12 de febrero**: ${lecturas.lecturas[0]["12_de_febrero"]}`
-        );
+        
         break;
       case "lider":
         await interaction.reply(

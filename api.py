@@ -1,9 +1,10 @@
 from flask import Flask, jsonify
 from nba_api.live.nba.endpoints import scoreboard
 import json
-
+import requests
+from bs4 import BeautifulSoup
 app = Flask(__name__)
-
+url = 'https://evangeli.net/evangelio'
 @app.route('/games', methods=['GET'])
 def get_games():
     # Today's Score Board
@@ -30,6 +31,13 @@ def get_games():
         })
 
     return jsonify(game_info)
+@app.route('/evangelio', methods=['GET'])
+def get_evangelio():
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    evangelio = soup.find('div', class_='evangeli_text')
+
+    return evangelio.text
 
 if __name__ == '__main__':
     app.run(debug=True, port=6969)
